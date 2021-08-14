@@ -12,6 +12,7 @@
 
 # here put the import lib
 
+from typing import List
 from pydantic import BaseModel, Field
 
 # here put the main code
@@ -19,12 +20,11 @@ from pydantic import BaseModel, Field
 
 class AnswersBase(BaseModel):
     """问卷数据基本序列"""
-    name: str = Field(...,title="姓名", max_length=4)
-    mobile: str = Field(...,title="电话", max_length=13)
-    gender: int = Field(...,title="性别",gt=0,le=1)
-    theme: int = Field(...,title="问卷主题",gt=1,le=7)
-    level: int = Field(...,title="评级",gt=1,le=5)
-    score: int = Field(...,title="分数",gt=0,le=100)
+    name: str = Field(..., title="姓名", max_length=4)
+    mobile: str = Field(..., title="电话", max_length=13)
+    gender: str = Field(..., title="性别", max_length=2)
+    theme: str = Field(..., title="问卷主题", max_length=16)
+    level: str = Field(..., title="评级", max_length=16)
 
     class Config:
         orm_mode = True
@@ -39,8 +39,23 @@ class AnswersCreate(AnswersBase):
 
 class AnswersView(AnswersBase):
     """查看"""
-    id: int = Field(...)
-    createat: int=Field(None,title="时间戳",)
+    createat: int = Field(None, title="时间戳",)
 
     class Config:
         orm_mode = True
+
+
+class AnswersOne(BaseModel):
+    """问卷数据单人序列"""
+    theme: str = Field(..., title="问卷主题", max_length=16)
+    level: str = Field(..., title="评级", max_length=16)
+
+    class Config:
+        orm_mode = True
+
+
+class AnswersOneData(BaseModel):
+    """问卷数据单人序列"""
+    name: str
+    mobile: str
+    data: List[AnswersOne]
