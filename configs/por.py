@@ -19,7 +19,7 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     DATABASE = {
-        'questionnaire': 'mysql://root:MyServer@127.0.0.1/questionnaire?charset=utf8',
+        'questionnaire': 'mysql://root@127.0.0.1/questionnaire?charset=utf8',
     }
 
 

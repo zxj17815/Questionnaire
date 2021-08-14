@@ -27,7 +27,7 @@ from schemas import answers as answers_schema
 
 router = APIRouter(
     prefix="",
-    tags=["orm product"],
+    tags=["Answers"],
     # dependencies=[Depends(get_token_header)],
     responses={404: {"description": "Not found"}},
 )
