@@ -21,7 +21,7 @@ import os
 env = os.getenv("ENV", "")
 if env:
     # 如果有虚拟环境 则是且为POR 并存在生产配置对应文件-> 生产环境
-    if env == 'POR' and os.path.exists('settings/settings_por.py'):
+    if env == 'POR' and os.path.exists('configs/por.py'):
         print("----------生产环境启动------------")
         from configs.por import settings
     else:
