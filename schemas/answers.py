@@ -58,4 +58,4 @@ class AnswersOneData(BaseModel):
     """问卷数据单人序列"""
     name: str
     mobile: str
-    data: List[AnswersOne]
+    theme_list: List[AnswersOne]

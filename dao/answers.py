@@ -56,6 +56,17 @@ def get_by_id(db: Session, pk: str):
     return db.query(models.Answers).filter(models.Answers.id == pk).first()
 
 
+def userlist(db: Session, name: str, mobile: str, skip: int = 1, limit: int = 10):
+    """查询用户"""
+    db_query = db.query(models.Answers.name, models.Answers.mobile)
+    if name:
+        db_query = db_query.filter(models.Answers.name == name)
+    if mobile:
+        db_query = db_query.filter(models.Answers.mobile == mobile)
+    db_query = db_query.distinct(models.Answers.name, models.Answers.mobile)
+    return db_query.count(), db_query.offset(limit * (skip - 1)).limit(limit).all()
+
+
 def get_by_name_and_mobile(db: Session, name: str, mobile: str) -> models.Answers:
     """通过姓名和电话获取数据"""
-    return db.query(models.Answers).from_statement(text("""SELECT b.* FROM (SELECT MAX( id ) AS id FROM answers GROUP BY theme) AS a INNER JOIN answers AS b ON a.id = b.id WHERE b.name=:name and b.mobile=:mobile""")).params(name=name,mobile=mobile).all()
+    return db.query(models.Answers).from_statement(text("""SELECT b.* FROM (SELECT MAX( id ) AS id FROM answers GROUP BY name,mobile,theme) AS a INNER JOIN answers AS b ON a.id = b.id WHERE b.name=:name and b.mobile=:mobile""")).params(name=name, mobile=mobile).all()
