@@ -58,12 +58,14 @@ def get_by_id(db: Session, pk: str):
 
 def userlist(db: Session, name: str, mobile: str, skip: int = 1, limit: int = 10):
     """查询用户"""
-    db_query = db.query(models.Answers.name, models.Answers.mobile)
+    db_query = db.query(models.Answers.name,
+                        models.Answers.mobile, models.Answers.gender)
     if name:
         db_query = db_query.filter(models.Answers.name == name)
     if mobile:
         db_query = db_query.filter(models.Answers.mobile == mobile)
-    db_query = db_query.distinct(models.Answers.name, models.Answers.mobile)
+    db_query = db_query.distinct(
+        models.Answers.name, models.Answers.mobile, models.Answers.gender)
     return db_query.count(), db_query.offset(limit * (skip - 1)).limit(limit).all()
 
 

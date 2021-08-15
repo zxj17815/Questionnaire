@@ -82,7 +82,7 @@ def alltheme(page: int = 1, page_size: int = 10, name: str = None, mobile: str =
             db, name=item.name, mobile=item.mobile)
         if one_data:
             commbo.append(answers_schema.AnswersOneData(
-                name=item.name, mobile=item.mobile, theme_list=one_data))
+                name=item.name, mobile=item.mobile, gender=item.gender, theme_list=one_data))
     data = PageBase(page=page, page_size=page_size, count=count,
                     data=commbo)
     return data
@@ -103,7 +103,7 @@ def readone(name: str, mobile: str, db: Session = Depends(get_db_dep)):
     data = answers_dao.get_by_name_and_mobile(db, name=name, mobile=mobile)
     if data:
         res = answers_schema.AnswersOneData(
-            name=name, mobile=mobile, theme_list=data)
+            name=name, mobile=mobile, gender=data[0].gender, theme_list=data)
         return res
     else:
         raise HTTPException(status_code=400, detail={"msg": "data not found"})

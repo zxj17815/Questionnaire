@@ -39,6 +39,7 @@ class AnswersCreate(AnswersBase):
 
 class AnswersView(AnswersBase):
     """查看"""
+    id: int = None
     createat: int = Field(None, title="时间戳",)
 
     class Config:
@@ -58,4 +59,5 @@ class AnswersOneData(BaseModel):
     """问卷数据单人序列"""
     name: str
     mobile: str
+    gender: str
     theme_list: List[AnswersOne]
