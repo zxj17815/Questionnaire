@@ -44,7 +44,7 @@ def list(db: Session, name: str, mobile: str, theme: str, skip: int = 1, limit: 
 def create(db: Session, answers: answers_schema.AnswersCreate):
     """新增"""
     db_answers = models.Answers(name=answers.name, mobile=answers.mobile, gender=answers.gender,
-                                theme=answers.theme, level=answers.level, createat=time.time()*100000)
+                                theme=answers.theme, level=answers.level, createat=int(round(time.time() * 1000)))
     db.add(db_answers)
     db.commit()
     db.refresh(db_answers)
